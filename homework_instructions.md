@@ -89,7 +89,7 @@ SPOTIFY_SECRET=your-spotify-secret
 
 ```js
 require("dotenv").config();
-```
+``
 
 8. Add the code required to import the `keys.js` file and store it in a variable.
   

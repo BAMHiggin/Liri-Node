@@ -1,16 +1,26 @@
-  {
+{
   "name": "liri-node",
   "version": "1.0.0",
-  "main": "axios.js",
+  "description": "",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BAMHiggin/Liri-Node.git"
+  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BAMHiggin/Liri-Node/issues"
+  },
+  "homepage": "https://github.com/BAMHiggin/Liri-Node#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "dotenv": "^6.2.0",
+    "moment": "^2.23.0",
     "node-spotify-api": "^1.0.7"
-  },
-  "devDependencies": {},
-  "description": ""
+  }
 }
