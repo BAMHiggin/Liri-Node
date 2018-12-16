@@ -82,21 +82,23 @@ if (command == 'spotify-this-song') {
 function spotifyThis(song) {
     spotify.search({ type: 'track', query: song }, function (err, data) {
         if (err) {
-            return console.log('Error occurred: ' + err);
+            // return console.log('Error occurred: ' + err);
+            //displays if song is not recognized
+            return console.log('Lookup failed, try another song!');
         }
         console.log('Artist: ' + data.tracks.items[0].artists[0].name);
         console.log('Song: ' + data.tracks.items[0].name);
         console.log('Preview: ' + data.tracks.items[0].preview_url);
         console.log('Album: ' + data.tracks.items[0].album.name);
 
-        var showData = [ //look into this 
-            song.data
-        ].join("\n\n");
+        // var showData = [ //look into this 
+        //     song.data
+        // ].join("\n\n");
 
-        fs.appendFile('log.txt', showData, function (err) {
-            if (err) throw err;
-            console.log(showData);
-        })
+        // fs.appendFile('log.txt', showData, function (err) {
+        //     if (err) throw err;
+        //     console.log(showData);
+        // })
     });
 }
 
@@ -107,11 +109,14 @@ function Concert() {
         var URL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
 
         axios.get(URL).then(function (response) {
-            // var concertData = response.data[i];
 
-
+            //displays if artist is valid, but not touring
             if (response.data[0] == null) {
                 console.log("Not on tour!");
+            }
+            //catches button smashing and non-artist shenanigans
+            else if (response.data[0].venue == null){
+                console.log("This artist doesn't exist!");
             }
             else {
 
@@ -147,6 +152,11 @@ function Movie() {
         axios.get(URL).then(function (response) {
             var movieData = response.data;
 
+            //catches button smashing and non-movie shenanigans
+            if (movieData.Title == null) {
+                return console.log("Lookup failed, try another movie!");
+            }
+
             // console.log(movieData);
             console.log("Title: " + movieData.Title);
             console.log("Release Year: " + movieData.Year);
@@ -156,40 +166,16 @@ function Movie() {
             console.log("Plot: " + movieData.Plot);
             console.log("Cast: " + movieData.Actors);
 
-            var showData = [
-                movieData.Name
-            ].join("\n\n");
+            // var showData = [
+            //     movieData[i]
+            // ].join("\n\n");
 
-            fs.appendFile('log.txt', showData, function (err) {
-                if (err) throw err;
-                console.log(showData);
-
-
-                // if (response.data[0] == null) {
-                //     console.log("Not on tour!");
-                // }
-                // else {
-
-                //     for (var i = 0; i < response.data.length; i++) {
-                //         var concertData = response.data[i];
-                //         console.log(concertData.venue.name);
-                //         console.log(concertData.venue.city + ", " + concertData.venue.region)
-                //         console.log(concertData.datetime);
-                //         console.log("------------------------------------------------");
+            // fs.appendFile('log.txt', showData, function (err) {
+            //     if (err) throw err;
+            //     console.log(showData);
 
 
-                //         var showData = [
-                //             concertData.name
-                //         ].join("\n\n");
-
-                //         fs.appendFile('log.txt', showData, function (err) {
-                //             if (err) throw err;
-                //             console.log(showData);
-                //         })
-                //     }
-                // }
-
-            })
+            // })
         })
 
     }
