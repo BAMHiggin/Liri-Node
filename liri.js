@@ -1,6 +1,14 @@
 require("dotenv").config();
 
+var axios = require("axios");
+
+var fs = require("fs");
+
 var Spotify = require('node-spotify-api');
+
+var concert = new Concert;
+
+// var OMDB = require()
 
 var keys = require("./keys.js");
 
@@ -13,9 +21,21 @@ console.log(command);
 if (command == 'spotify-this-song') {
     console.log("run spotify");
     var song = process.argv.splice(3, process.argv.length).join(' ');
-    spotifyThis(song);
+    if (song != '') {
+        spotifyThis(song);
+    } else {
+        spotifyThis("The Sign Ace of Base");
+    }
+
+} else if (command == 'concert-this') {
+    console.log("run BIT");
+    var artist = process.argv.splice(3, process.argv.length).join(' ');
+    if (artist) {
+        concert.findConcert(artist);
+    }
 
 }
+
 
 
 function spotifyThis(song) {
@@ -30,4 +50,38 @@ function spotifyThis(song) {
     });
 }
 
-// to do: set The Sign defaultif no song is provided
+
+// var Concert = function(){
+
+function Concert() {
+
+    this.findConcert = function (artist) {
+        var URL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+
+        axios.get(URL).then(function (response) {
+            // var concertData = response.data[i];
+
+            for (var i = 0; i < response.data.length; i++) {
+                var concertData = response.data[i];
+                console.log(concertData.venue.name);
+                console.log(concertData.venue.city + ", " + concertData.venue.region)
+                console.log(concertData.datetime);
+                console.log("------------------------------------------------");
+            }
+
+            var showData = [
+                concertData.name
+            ].join("\n\n");
+
+            fs.appendFile('log.txt', showData, function (err) {
+                if (err) throw err;
+                console.log(showData);
+            })
+
+        })
+
+    }
+
+};
+
+// module.exports = Concert;
