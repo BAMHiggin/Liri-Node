@@ -1,10 +1,15 @@
+//variables and required npm programs
+
 require("dotenv").config();
 
+//changes time format for concert info
 var moment = require('moment');
 // moment().format("DD/MM/YYYY");
 
+//to pull from OMDB and BIT
 var axios = require("axios");
 
+//to read random.txt file
 var fs = require("fs");
 
 var Spotify = require('node-spotify-api');
@@ -17,23 +22,24 @@ var keys = require("./keys.js");
 
 var spotify = new Spotify(keys.spotify);
 
+//for node movie/music/concert search commands
 var command = process.argv[2];
 
 
-
-console.log(command);
-
 if (command == 'spotify-this-song') {
-    console.log("run spotify");
+    // console.log("run spotify");
+    //allows searching of titles with more than one word
     var song = process.argv.splice(3, process.argv.length).join(' ');
+    //if not blank, run as normal. if blank, play AOB
     if (song != '') {
         spotifyThis(song);
     } else {
+        // if no song is entered
         spotifyThis("The Sign Ace of Base");
     }
 
 } else if (command == 'concert-this') {
-    console.log("run BIT");
+    // console.log("run BIT");
     var artist = process.argv.splice(3, process.argv.length).join(' ');
     if (artist) {
         concert.findConcert(artist);
@@ -49,8 +55,28 @@ if (command == 'spotify-this-song') {
     } else if (" ") {
         movie.findMovie("Mr. Nobody");
     }
-}
+} else if (command == 'do-what-it-says') {
+    // console.log("DO IT");
+    fs.readFile("random.txt", "utf8", function (error, data) {
+        if (error) {
+            return console.log(error);
+        }
+        // console.log(data);
+        //splits text into an array so specific points can be called
+        var dataArray = data.split(",");
 
+        if (dataArray[0] == 'spotify-this-song') {
+
+            spotifyThis(dataArray[1]);
+
+        } else if (dataArray[0] == 'concert-this') {
+            concert.findConcert(dataArray[1]);
+
+        } else if (dataArray[0] == 'movie-this') {
+            movie.findMovie(dataArray[1]);
+        }
+    })
+}
 
 
 function spotifyThis(song) {
@@ -73,8 +99,6 @@ function spotifyThis(song) {
         })
     });
 }
-
-
 
 
 function Concert() {
@@ -171,3 +195,4 @@ function Movie() {
     }
 
 };
+
