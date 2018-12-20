@@ -4,7 +4,7 @@
 
 This project joins the Siris, Cortanas, and Alexas of the internet-of-things as an entertainment search assistant -- meet LIRI! 
 
-Liri can assist you with finding info and previews of your favorite songs, connecting you with concert details of your favorite artists, and indulge your cinephile curiousity via movie queries.
+Liri can assist you with finding info and previews of your favorite songs, connecting you with concert details of your favorite artists, and indulge your cinephile curiosity via movie queries.
 
 ## How to Use
 
